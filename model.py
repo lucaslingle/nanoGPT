@@ -186,7 +186,7 @@ class GPT(nn.Module):
     def forward(self, idx, targets=None):
         device = idx.device
         b, t = idx.size()
-        if t <= self.config.block_size:
+        if t > self.config.block_size:
             msg = f"Got seq length {t} longer than block size {self.config.block_size}"
             raise ValueError(msg)
         pos = torch.arange(0, t, dtype=torch.long, device=device)  # shape (t)
