@@ -335,8 +335,8 @@ while True:
         lossf = loss.item() * gradient_accumulation_steps
         if local_step >= 5:  # let the training loop settle a bit
             mfu = raw_model.estimate_mfu(batch_size * gradient_accumulation_steps, dt)
-            ema = mfu if running_mfu == -1.0 else 0.9*running_mfu + 0.1*mfu
-        print("iter {step}: loss {lossf:.4f}, time {dt*1000:.2f}ms, mfu {ema*100:.2f}%")
+            running_mfu = mfu if running_mfu == -1.0 else 0.9*running_mfu + 0.1*mfu
+        print(f"step {step}: loss {lossf:.4f} time {dt*1000:.2f}ms mfu {running_mfu*100:.2f}%")
     step += 1
     local_step += 1
 
